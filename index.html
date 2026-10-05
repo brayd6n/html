@@ -1,12 +1,14 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> brayd6n client</title>
+    <title>brayd6n client</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -134,19 +136,6 @@
             text-align: left;
         }
 
-        #timer {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(0, 0, 0, 0.6);
-            color: #ff61fa;
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: bold;
-            box-shadow: 0 0 10px rgba(255, 97, 250, 0.3);
-        }
-
         @keyframes hologram {
             0% { opacity: 0.2; }
             50% { opacity: 0.5; }
@@ -169,45 +158,66 @@
             pointer-events: none;
             z-index: 999;
         }
+
+        .version-card a {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
     </style>
 </head>
+
 <body>
+
     <div class="scanlines"></div>
+
     <div class="scene">
         <div class="container">
-            <center><h1> brayd6n client </h1></center>
-            <div id="timer">20</div>
+
+            <center>
+                <h1>brayd6n client</h1>
+            </center>
+
             <ul class="version-grid">
-            <li class="version-card" data-href="https://happinessad.github.io/html/a1">
-                <a href="https://happinessad.github.io/html/a1">
-                    <h2 class="version-title"> 1.5.2-sp2.01</h2>
-                    <p class="version-description">Blazing fast performance. Experience the smoothest gameplay.</p>
-                    <span class="version-meta">Latest & Greatest (Performance)</span>
-                </a>
-            </li>
-           
-              
-           
-            <li class="version-card" data-href="https://happinessad.github.io/html/a4">
-                <a href="https://happinessad.github.io/html/a4">
-                    <h2 class="version-title">Resent</h2>
-                    <p class="version-description">Dominate the arena! A heavily modded version built for PvP enthusiasts, offering a unique and intense combat experience.</p>
-                    <span class="version-meta">PvP Powerhouse (Modded)</span>
-                </a>
-            </li>
+
+                <li class="version-card">
+                    <a href="https://happinessad.github.io/html/a1">
+                        <h2 class="version-title">1.5.2-sp2.01</h2>
+                        <p class="version-description">
+                            Blazing fast performance. Experience the smoothest gameplay.
+                        </p>
+                        <span class="version-meta">
+                            Latest &amp; Greatest (Performance)
+                        </span>
+                    </a>
+                </li>
+
+                <li class="version-card">
+                    <a href="https://happinessad.github.io/html/a4">
+                        <h2 class="version-title">Resent</h2>
+                        <p class="version-description">
+                            Dominate the arena! A heavily modded version built for PvP enthusiasts, offering a unique and intense combat experience.
+                        </p>
+                        <span class="version-meta">
+                            PvP Powerhouse (Modded)
+                        </span>
+                    </a>
+                </li>
+
             </ul>
+
         </div>
     </div>
 
     <script>
-        // Camera movement
         const scene = document.querySelector('.scene');
+
         let mouseX = 0;
         let mouseY = 0;
 
         document.addEventListener('mousemove', (e) => {
-            mouseX = (e.clientX - window.innerWidth/2) * 0.01;
-            mouseY = (e.clientY - window.innerHeight/2) * 0.01;
+            mouseX = (e.clientX - window.innerWidth / 2) * 0.01;
+            mouseY = (e.clientY - window.innerHeight / 2) * 0.01;
 
             scene.style.transform = `
                 rotateX(${-mouseY}deg)
@@ -220,40 +230,8 @@
                 translateY(${mouseY * 0.3}px)
             `;
         });
-
-        // Timer logic remains the same
-        let timeLeft = 20;
-        const timerDisplay = document.getElementById('timer');
-        let countdownInterval;
-        const versionCards = document.querySelectorAll('.version-card');
-
-        function updateTimer() {
-            timerDisplay.textContent = timeLeft;
-            if (timeLeft <= 0) {
-                clearInterval(countdownInterval);
-                window.location.href = 'https://happinessad.github.io/html/a1';
-            }
-            timeLeft--;
-        }
-
-        function startTimer() {
-            countdownInterval = setInterval(updateTimer, 1000);
-        }
-
-        function stopTimer() {
-            clearInterval(countdownInterval);
-        }
-
-        versionCards.forEach(card => {
-            card.addEventListener('click', () => {
-                stopTimer();
-            });
-        });
-
-        startTimer();
     </script>
-    <script>
-window.open("about:blank", "_blank");
-</script>
+
 </body>
 </html>
+```
