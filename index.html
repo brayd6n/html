@@ -1,4 +1,4 @@
-```html
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,6 +18,7 @@
         body {
             font-family: 'Inter', sans-serif;
             background: linear-gradient(135deg, #000000, #202020, #414141);
+            color: #ffffff;
             margin: 0;
             padding: 0;
             min-height: 100vh;
@@ -69,9 +70,17 @@
 
         h1 {
             font-size: 2.5rem;
-            margin-bottom: 30px;
+            margin: 0 0 15px;
             color: #ffffff;
             text-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
+            text-align: center;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #aaaaaa;
+            font-size: 0.95rem;
+            margin-bottom: 30px;
         }
 
         .version-grid {
@@ -87,7 +96,10 @@
             background: #292929;
             border-radius: 10px;
             padding: 25px;
-            transition: all 0.3s ease;
+            transition: background 0.3s ease,
+                        border-color 0.3s ease,
+                        box-shadow 0.3s ease,
+                        transform 0.3s ease;
             cursor: pointer;
             position: relative;
             overflow: hidden;
@@ -123,10 +135,24 @@
             left: 200%;
         }
 
+        .version-card.selected {
+            border: 2px solid #ffffff;
+            background: #383838;
+            box-shadow: 0 0 22px rgba(255, 255, 255, 0.16);
+        }
+
+        .version-card a {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            position: relative;
+            z-index: 1;
+        }
+
         .version-title {
             font-size: 1.4rem;
             font-weight: bold;
-            margin-bottom: 10px;
+            margin: 0 0 10px;
             color: #ffffff;
         }
 
@@ -138,22 +164,58 @@
         }
 
         .version-meta {
+            display: block;
             font-size: 0.8rem;
             color: #aaaaaa;
             margin-top: 10px;
             text-align: left;
         }
 
+        .select-label {
+            text-align: center;
+            color: #bbbbbb;
+            margin: 25px 0 12px;
+            font-size: 0.9rem;
+        }
+
+        .launch-button {
+            width: 100%;
+            padding: 14px 18px;
+            background: #eeeeee;
+            color: #111111;
+            border: 1px solid #ffffff;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .launch-button:hover:not(:disabled) {
+            background: #cccccc;
+            transform: translateY(-2px);
+        }
+
+        .launch-button:disabled {
+            background: #444444;
+            color: #999999;
+            border-color: #555555;
+            cursor: not-allowed;
+        }
+
+        #message {
+            color: #cccccc;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            text-align: center;
+            margin: 15px 0 0;
+        }
+
         @keyframes hologram {
-            0% {
-                opacity: 0.45;
-            }
-            50% {
-                opacity: 1;
-            }
-            100% {
-                opacity: 0.45;
-            }
+            0% { opacity: 0.45; }
+            50% { opacity: 1; }
+            100% { opacity: 0.45; }
         }
 
         .scanlines {
@@ -173,12 +235,6 @@
             z-index: 999;
         }
 
-        .version-card a {
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }
-
         @media (max-width: 500px) {
             .container {
                 padding: 25px 20px;
@@ -188,6 +244,13 @@
                 font-size: 2rem;
             }
         }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
     </style>
 </head>
 
@@ -195,33 +258,48 @@
 
     <div class="scanlines"></div>
 
-    <div class="scene">
+    <main class="scene">
         <div class="container">
 
-            <center>
-                <h1>brayd6n client</h1>
-            </center>
+            <h1>brayd6n client</h1>
+            <p class="subtitle">Choose your client to get started.</p>
 
             <ul class="version-grid">
 
-                <li class="version-card">
-                    <a href="https://brayd6n.github.io/html/a1">
+                <li class="version-card"
+                    data-url="https://brayd6n.github.io/html/a1"
+                    data-name="1.5.2-sp2.01"
+                    aria-pressed="false">
+
+                    <a href="https://brayd6n.github.io/html/a1"
+                       onclick="event.preventDefault(); selectMode(this.closest('.version-card'))">
+
                         <h2 class="version-title">1.5.2-sp2.01</h2>
+
                         <p class="version-description">
                             Blazing fast performance. Experience the smoothest gameplay.
                         </p>
+
                         <span class="version-meta">
                             Latest &amp; Greatest (Performance)
                         </span>
                     </a>
                 </li>
 
-                <li class="version-card">
-                    <a href="https://brayd6n.github.io/html/a4">
+                <li class="version-card"
+                    data-url="https://brayd6n.github.io/html/a4"
+                    data-name="Resent"
+                    aria-pressed="false">
+
+                    <a href="https://brayd6n.github.io/html/a4"
+                       onclick="event.preventDefault(); selectMode(this.closest('.version-card'))">
+
                         <h2 class="version-title">Resent</h2>
+
                         <p class="version-description">
                             Dominate the arena! A heavily modded version built for PvP enthusiasts, offering a unique and intense combat experience.
                         </p>
+
                         <span class="version-meta">
                             PvP Powerhouse (Modded)
                         </span>
@@ -230,20 +308,110 @@
 
             </ul>
 
+            <p class="select-label" id="selectionText">
+                Select a mode above
+            </p>
+
+            <button class="launch-button"
+                    id="launchButton"
+                    disabled
+                    onclick="launchMode()">
+                Select a mode first
+            </button>
+
+            <p id="message" role="status"></p>
+
         </div>
-    </div>
+    </main>
 
     <script>
+        let selectedUrl = null;
+        let selectedName = null;
+
+        function selectMode(card) {
+            document.querySelectorAll('.version-card').forEach(item => {
+                item.classList.remove('selected');
+                item.setAttribute('aria-pressed', 'false');
+            });
+
+            card.classList.add('selected');
+            card.setAttribute('aria-pressed', 'true');
+
+            selectedUrl = card.dataset.url;
+            selectedName = card.dataset.name;
+
+            document.getElementById('selectionText').textContent =
+                'Selected mode: ' + selectedName;
+
+            const button = document.getElementById('launchButton');
+            button.disabled = false;
+            button.textContent = 'Launch ' + selectedName + ' in about:blank';
+
+            document.getElementById('message').textContent = '';
+        }
+
+        function launchMode() {
+            if (!selectedUrl) return;
+
+            const gameTab = window.open('about:blank', '_blank');
+
+            if (!gameTab) {
+                document.getElementById('message').textContent =
+                    'Pop-up blocked. Allow pop-ups for this site and try again.';
+                return;
+            }
+
+            gameTab.document.title = selectedName;
+            gameTab.document.body.style.cssText =
+                'margin:0;overflow:hidden;background:#000;';
+
+            const frame = gameTab.document.createElement('iframe');
+
+            frame.src = selectedUrl;
+            frame.title = selectedName;
+            frame.allowFullscreen = true;
+            frame.setAttribute(
+                'allow',
+                'fullscreen; autoplay; gamepad; clipboard-read; clipboard-write'
+            );
+
+            frame.style.cssText =
+                'position:fixed;top:0;left:0;width:100%;height:100%;' +
+                'border:0;margin:0;padding:0;background:#000;';
+
+            gameTab.document.body.appendChild(frame);
+        }
+
+        // Allow the user to select a card by clicking anywhere on it.
+        document.querySelectorAll('.version-card').forEach(card => {
+            card.addEventListener('click', event => {
+                if (event.target.closest('a')) return;
+                selectMode(card);
+            });
+
+            card.addEventListener('keydown', event => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    selectMode(card);
+                }
+            });
+
+            card.tabIndex = 0;
+            card.setAttribute('role', 'button');
+        });
+
+        // Original mouse movement animation.
         const scene = document.querySelector('.scene');
         const container = document.querySelector('.container');
 
-        document.addEventListener('mousemove', (e) => {
+        document.addEventListener('mousemove', event => {
             if (window.innerWidth <= 600) return;
 
             const mouseX =
-                (e.clientX - window.innerWidth / 2) * 0.01;
+                (event.clientX - window.innerWidth / 2) * 0.01;
+
             const mouseY =
-                (e.clientY - window.innerHeight / 2) * 0.01;
+                (event.clientY - window.innerHeight / 2) * 0.01;
 
             scene.style.transform = `
                 rotateX(${-mouseY}deg)
@@ -259,4 +427,3 @@
 
 </body>
 </html>
-```
