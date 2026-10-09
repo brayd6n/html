@@ -5,44 +5,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>brayd6n client</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(45deg, #0a0a2e, #1a1a1a);
+            background: linear-gradient(135deg, #000000, #202020, #414141);
             margin: 0;
             padding: 0;
             min-height: 100vh;
-            overflow: hidden;
+            overflow-x: hidden;
             perspective: 1000px;
-            transform-style: preserve-3d;
         }
 
         .scene {
             position: relative;
             width: 100%;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            transform-style: preserve-3d;
+            padding: 30px 0;
             transition: transform 0.3s;
         }
 
         .container {
-            background: rgba(10, 10, 46, 0.9);
+            background: rgba(20, 20, 20, 0.96);
             padding: 40px;
             border-radius: 15px;
             width: 90%;
             max-width: 700px;
             position: relative;
-            transform-style: preserve-3d;
-            box-shadow: 0 0 50px rgba(106, 227, 255, 0.2);
-            border: 1px solid rgba(106, 227, 255, 0.3);
-            backdrop-filter: blur(10px);
+            box-shadow: 0 0 40px rgba(255, 255, 255, 0.07);
+            border: 1px solid #555555;
             transition: transform 0.3s, box-shadow 0.3s;
         }
 
@@ -53,23 +55,28 @@
             left: -2px;
             right: -2px;
             bottom: -2px;
-            background: linear-gradient(45deg, #6ae3ff, #ff61fa);
+            background: linear-gradient(
+                135deg,
+                #ffffff,
+                #777777,
+                #222222,
+                #cccccc
+            );
             z-index: -1;
             border-radius: 17px;
-            animation: hologram 3s infinite linear;
+            animation: hologram 5s infinite linear;
         }
 
         h1 {
             font-size: 2.5rem;
             margin-bottom: 30px;
-            color: #6ae3ff;
-            text-shadow: 0 0 15px rgba(106, 227, 255, 0.5);
-            position: relative;
+            color: #ffffff;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
         }
 
         .version-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 20px;
             list-style: none;
             padding: 0;
@@ -77,20 +84,21 @@
         }
 
         .version-card {
-            background: rgba(20, 20, 60, 0.8);
+            background: #292929;
             border-radius: 10px;
             padding: 25px;
             transition: all 0.3s ease;
             cursor: pointer;
             position: relative;
             overflow: hidden;
-            border: 1px solid rgba(106, 227, 255, 0.3);
+            border: 1px solid #555555;
         }
 
         .version-card:hover {
             transform: translateY(-5px) scale(1.02);
-            background: rgba(30, 30, 80, 0.9);
-            box-shadow: 0 0 25px rgba(106, 227, 255, 0.3);
+            background: #3a3a3a;
+            border-color: #eeeeee;
+            box-shadow: 0 0 22px rgba(255, 255, 255, 0.12);
         }
 
         .version-card::before {
@@ -102,12 +110,13 @@
             height: 100%;
             background: linear-gradient(
                 to right,
-                rgba(255, 255, 255, 0) 0%,
-                rgba(255, 255, 255, 0.1) 50%,
-                rgba(255, 255, 255, 0) 100%
+                transparent,
+                rgba(255, 255, 255, 0.12),
+                transparent
             );
             transform: skewX(-45deg);
             transition: left 0.5s;
+            pointer-events: none;
         }
 
         .version-card:hover::before {
@@ -118,28 +127,33 @@
             font-size: 1.4rem;
             font-weight: bold;
             margin-bottom: 10px;
-            color: #ff61fa;
-            text-shadow: 0 0 10px rgba(255, 97, 250, 0.3);
+            color: #ffffff;
         }
 
         .version-description {
             font-size: 0.9rem;
-            color: #bdc3c7;
-            line-height: 1.4;
+            color: #d0d0d0;
+            line-height: 1.5;
             margin-bottom: 15px;
         }
 
         .version-meta {
             font-size: 0.8rem;
-            color: #6ae3ff;
+            color: #aaaaaa;
             margin-top: 10px;
             text-align: left;
         }
 
         @keyframes hologram {
-            0% { opacity: 0.2; }
-            50% { opacity: 0.5; }
-            100% { opacity: 0.2; }
+            0% {
+                opacity: 0.45;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0.45;
+            }
         }
 
         .scanlines {
@@ -150,10 +164,10 @@
             height: 100%;
             background: repeating-linear-gradient(
                 0deg,
-                rgba(0, 0, 0, 0) 0px,
-                rgba(0, 0, 0, 0) 1px,
-                rgba(255, 255, 255, 0.05) 2px,
-                rgba(255, 255, 255, 0.05) 3px
+                transparent 0px,
+                transparent 2px,
+                rgba(255, 255, 255, 0.018) 3px,
+                rgba(255, 255, 255, 0.018) 4px
             );
             pointer-events: none;
             z-index: 999;
@@ -163,6 +177,16 @@
             text-decoration: none;
             color: inherit;
             display: block;
+        }
+
+        @media (max-width: 500px) {
+            .container {
+                padding: 25px 20px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
         }
     </style>
 </head>
@@ -181,7 +205,7 @@
             <ul class="version-grid">
 
                 <li class="version-card">
-                    <a href="https://brayd6n.github.io/a1">
+                    <a href="https://brayd6n.github.io/html/a1">
                         <h2 class="version-title">1.5.2-sp2.01</h2>
                         <p class="version-description">
                             Blazing fast performance. Experience the smoothest gameplay.
@@ -193,7 +217,7 @@
                 </li>
 
                 <li class="version-card">
-                    <a href="https://brayd6n.github.io/a4">
+                    <a href="https://brayd6n.github.io/html/a4">
                         <h2 class="version-title">Resent</h2>
                         <p class="version-description">
                             Dominate the arena! A heavily modded version built for PvP enthusiasts, offering a unique and intense combat experience.
@@ -211,21 +235,22 @@
 
     <script>
         const scene = document.querySelector('.scene');
-
-        let mouseX = 0;
-        let mouseY = 0;
+        const container = document.querySelector('.container');
 
         document.addEventListener('mousemove', (e) => {
-            mouseX = (e.clientX - window.innerWidth / 2) * 0.01;
-            mouseY = (e.clientY - window.innerHeight / 2) * 0.01;
+            if (window.innerWidth <= 600) return;
+
+            const mouseX =
+                (e.clientX - window.innerWidth / 2) * 0.01;
+            const mouseY =
+                (e.clientY - window.innerHeight / 2) * 0.01;
 
             scene.style.transform = `
                 rotateX(${-mouseY}deg)
                 rotateY(${mouseX}deg)
-                translateZ(50px)
             `;
 
-            document.querySelector('.container').style.transform = `
+            container.style.transform = `
                 translateX(${mouseX * 0.3}px)
                 translateY(${mouseY * 0.3}px)
             `;
